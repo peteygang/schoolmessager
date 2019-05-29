@@ -7,33 +7,19 @@
 <body>
 
 		<table>
+		{% for class in classes %}
+
 			<tr>
-			<td>English		</td> 
-			<a href="{{ url_for('classmates') }}">Click to see classmates?</a>
-			<td> {{names}}  </td>
-			<td> {{realemails}}</td>
+			<th>{{class}}</th>
+			{%for realemail in realemails%}
+			<td> Email: <a href="{{realemail}}" > </a>		</td> 
+			{%endfor%}
+			<td> hi </td>
+			<td> hi there</td>
 			<td>Assignment <textarea rows="4" cols="50" name= "hw" type= "text" >  </textarea></td>
 			</tr> <br>
-			<tr>
-			<td>History		</td> 
-			<td>Classmates</td>
-			<td>Assignment <textarea rows="4" cols="50" name= "hw" type= "text" >  </textarea></td>
-			</tr> <br>
-			<tr>
-			<td>Math		</td> 
-			<td>Classmates</td>
-			<td>Assignment <textarea rows="4" cols="50" name= "hw" type= "text" >  </textarea></td>
-			</tr> <br>
-			<tr>
-			<td>Science		</td> 
-			<td>Classmates</td>
-			<td>Assignment <textarea rows="4" cols="50" name= "hw" type= "text" >  </textarea></td>
-			</tr> <br>
-			<tr> 
-			<td> Languadge		 </td>
-			<td>Classmates</td>
-			<td>Assignment <textarea rows="4" cols="50" name= "hw" type= "text" >  </textarea></td>
-			</tr>
+			{%endfor%}
+			
 		</table>
 
 </body>

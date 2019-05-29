@@ -2,12 +2,12 @@ import urllib
 from bs4 import BeautifulSoup
 from urllib.request import urlopen
 from flask import Flask, render_template, flash, redirect, url_for, request
-import re
+import requests
 # from app import app
 # app.secret_key = 'a random key'
 print('hi')
 # print('server name ', app.config["SERVER_NAME"])
-app = Flask(__name__)
+from app import app, db
 
 @app.route('/test')
 def hello():
@@ -15,16 +15,23 @@ def hello():
 
 @app.route('/')
 def index():
-	quote_page = 'file:///Users/pecembalest/Desktop/compsci/compscipeople.html'
-	data = []
+	# quote_page = "https://accounts.google.com/ServiceLogin/signinchooser?service=classroom&passive=1209600&continue=https%3A%2F%2Fclassroom.google.com%2Fh&followup=https%3A%2F%2Fclassroom.google.com%2Fh&emr=1&flowName=GlifWebSignIn&flowEntry=ServiceLogin"
+	# user = {email: '', password: ''}
+	# data = []
+	# page = urlopen(quote_page, 'r')
+	# soup = BeautifulSoup(page, 'html.parser')
+	# youremails = soup.find_all('div', attrs={'class': 'to0cd'})
+	# print(youremails)
+	# for youremail in youremails:
+	quote_page = "file:///Users/pecembalest/Desktop/compsci/microblog/app/compscipeople.html"
 	page = urlopen(quote_page, 'r')
 	soup = BeautifulSoup(page, 'html.parser')
 	counter = 0
 	names = soup.find_all('span', attrs={'class': 'y4ihN'})
 	for name in names:
 		names[counter] = name.text.strip('<span class="y4ihN"></span>')
-		db.session.add(name)
-		db.session.commit()
+		# db.session.add(name)
+		# db.session.commit()
 		counter = counter +1
 	print(names)
 	thecounter = 0 
@@ -38,9 +45,23 @@ def index():
 	for tag in tags:
 		if tag.count('https://mail.google.com/mail/?view') == 1:
 			realemails.append(tag)
-	
+	# for realemail in realemails:
+	realemails = realemails[::2]
 	print(realemails)
-	return render_template('realclassmates.html', names = names, realemails = realemails)
+
+
+	quote_page1 = 'file:///Users/pecembalest/Desktop/compsci/microblog/app/classes.html'
+	anotherpage = urlopen(quote_page1, 'r')
+	soup1 = BeautifulSoup(anotherpage, 'html.parser')
+	classes = soup1.find_all('div', attrs={'class': 'YVvGBb csjh4b'})
+	acounter = 0
+	for aclass in classes:
+		classes[acounter] = aclass.text.strip('<div class="YVvGBb csjh4b"></div>')
+		acounter = acounter +1
+	print(classes)
+	
+	# print(realemails)
+	return render_template('realclassmates.html', names = names, realemails = realemails, classes = classes)
 
 @app.route('/classmates')
 def classmates():
@@ -57,7 +78,6 @@ if __name__ == "__main__":
 # 	thecounter = thecounter +1
 # re.compile("^https://mail.google.com/"
 # <a aria-label="Email gbenedisgrab@packer.edu" class="IrxBzb TpQm9d" href="https://mail.google.com/mail/?view=cm&amp;fs=1&amp;to=gbenedisgrab%40packer.edu&amp;authuser=0" 
-
 
 # Jack = soup.find(attrs={'data-current-student-id': '7018766'})
 
